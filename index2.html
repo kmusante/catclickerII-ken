@@ -12,11 +12,20 @@
 
 	<!--cat viewing area with cat image-->
 	<p id="catName"></p>
-	<img src="#" id="catPic">
+	<img src="#" height="350" width="350" id="catPic">
 	<p id="catCounter"></p>
+	<!--admin area-->
+	<button id="adminButton"></button>
 
-
-
+	<div id="details">
+	  <form>
+    	<a>#Clicks</a><input type="text" name="clicks" value="">
+        <a>Name</a><input type="text" name="name" value=""><br>
+        <a>URL</a><input type="text" name="url" size="170" value="">
+        <button id="saveDetail">Save</button>
+        <button id="cancelDetail">Cancel</button>
+      </form>
+    </div>
 
 	<script src="app2.js">
 	</script>

@@ -35,13 +35,16 @@ var cats= [{
 }];
 
 
-//create list with cat names
+//create and render list with cat names and admin button
 
 function makeCatList() {
 	cats.forEach(function(cat, index){
+		var adminButton;
 		var idCat=cat.name+index;
 		$("#catList").append('<li id="'+index+'">'+cat.name+'</li>');
-	});
+	//render admin button but hide details	
+	});$("#details").hide();
+	$("#adminButton").append('Admin');
 }
 //display the image and name of clicked cat
 var catImage;
@@ -49,82 +52,58 @@ $("#catList").click("click", function (e) {
 	var id=e.target.id;
 	var catUrl=cats[id].image;
 	currentCat=cats[id];
+	//hide details whenever a new cat is clicked
+	$("#details").hide();
 	//console.log(e.target);//	catSelection();
 	//console.log(id);
 	//console.log(cats[id]);
 	//console.log(catUrl);
 	$("#catName").text(cats[id].name);
 	$("#catCounter").text("Count="+currentCat.clicks);
-	$("#catPic").error(function(){
-		alert("Image is a NO SHOW.")
+	//make error handler in event cat image does not display
+	$("#catPic").on('error', function(){
+		$("#catCounter").text("Count="+currentCat.clicks+" Alt picture= "+cats[id].alt);
+        console.log('error!!!!!!');
+		alert("Image is a NO SHOW.");
 	}).attr("src",catUrl);
+	//listen for admin button click and make details visible
+	$("#adminButton").click("click", function(){ 
+		$("#details").show();
+		( $('[name=clicks]').val(currentCat.clicks) );
+		( $('[name=name]').val(cats[id].name) );
+		( $('[name=url]').val(catUrl) );
+		//cancel admin when cancel button is clicked
+		});
 });
 
 //create clicker counter and display counter from clicks
 var catCount;
 $("#catPic").click("click", function(e) {
-	//console.log("clicking");
 	console.log(currentCat);
 	currentCat.clicks=currentCat.clicks+1;
 	console.log(currentCat.clicks);
 	$("#catCounter").text("Count ="+currentCat.clicks);
+	//hide admin function whenever cat pic is clicked
+	$("#details").hide();
 });
 
+//cancel admin when cancel button is clicked
+var cancel;
+$("#cancelDetail").click("click", function(){ 
+		$("#details").hide();
+});
 
+var updateName, updateClicks, updateUrl;
+$("#saveDetail").click("click", function(){ 
+	updateClicks=( $('[name=clicks]').val(currentCat.clicks) );
+	updateName=( $('[name=name]').val(cats[id].name) );
+	updateUrl=( $('[name=url]').val(catUrl) );
+	cats[id].name=updateName;
+	cats[id].clicks=updateClicks;
+	cats[id].url=updateUrl;
+
+});
 
 makeCatList();
 
-
-
-
-//$(document).ready(function() {
-
-
-
-
-
-
-
-
-
-    // Variables for functions
-    //var cat = cats[i];
-    // Append cats to page
-/*
-    $('#catList').append('<p id="cat' + i + '"><a href="#">' + cat.name + 
-           '</p></a>');
-
-    // Add cats to main cat div when clicked
-    $('#cat' + i).click((function(catImage) {
-        return function() {
-            // Remove a cat if there's already one
-            if ($('.catList')) {
-                $('.catList').detach();
-            }
-        }
-    
-
-            // Add the new cat
-            /*$('#cat-container').append('<div id="cat-main' + i + 
-                          '" class="cat cat-main">'
-                          <img class="catimage" src="' + catCopy.image + 
-                          '" alt="' + catCopy.alt + '">
-                          <div class="catname modal">' + catCopy.name + 
-                          '</div></div>');
-        }
-    })(cat));*/
-
-/*function displayCats() {
-			var allCats = controller.getAllCats();
-			var htmlString = '';
-			var cat = '';
-			allCats.forEach(function(currentValue, index){
-				cat = 'cat' + (index + 1);
-				htmlString += '<li class="cat_list_item">' +
-					currentValue[cat].name +
-					'</li>';
-			});
-			$('#cat_list').html(htmlString);
-		}*/
-//if the image of displayed cat is clicked increase increment count
 
