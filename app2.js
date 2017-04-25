@@ -1,6 +1,7 @@
 //define cats array with cat objects
 //to store cat names and image url
 var currentCat=null;
+var updateName, updateClicks, updateUrl;
 var cats= [{
 	name: "cat1",
 	image: 
@@ -51,7 +52,6 @@ var catImage;
 $("#catList").click("click", function (e) {
 	var id=e.target.id;
 	var catUrl=cats[id].image;
-	var updateName, updateClicks, updateUrl;
 	currentCat=cats[id];
 	//hide details whenever a new cat is clicked
 	$("#details").hide();
@@ -67,12 +67,16 @@ $("#catList").click("click", function (e) {
         console.log('error!!!!!!');
 		alert("Image is a NO SHOW.");
 	}).attr("src",catUrl);
-	//listen for admin button click and make details visible
+	
+});
+
+//listen for admin button click and make details visible
+var adminButton;
 	$("#adminButton").click("click", function(){ 
 		$("#details").show();
 		( $('[name=clicks]').val(currentCat.clicks) );
-		( $('[name=name]').val(cats[id].name) );
-		( $('[name=url]').val(catUrl) );
+		( $('[name=name]').val(currentCat.name) );
+		( $('[name=url]').val(currentCat.image) );
 		});
 	//update fields upon saving
 	$("#saveDetail").click("click", function(){
@@ -82,19 +86,23 @@ $("#catList").click("click", function (e) {
 		console.log(updateUrl);
 		console.log(updateName);
 		console.log(updateClicks);
-		cats[id].name=updateName;
-		console.log(cats[id].name);
 		$("#details").hide();
-		$('<li id="index">cat.name</li>').replaceWith(updateName);
+		//$('<li id="index">cat.name</li>').replaceWith(updateName);
+		//$('<li id="index">cat.clicks</li>').replaceWith(updateClicks);
+		//$('<li id="index">cat.image</li>').replaceWith(updateUrl);
+		currentCat.name=updateName;
+		currentCat.clicks=updateClicks;
+		currentCat.image=updateUrl;
+		$("#catName").text(currentCat.name);
+		$("#catCounter").text("Count="+currentCat.clicks);
+		$('<li id=id>cats[id].name</li>').replaceWith('<li id=id>updateName</li>');
 		return false;
 		});
-});
-
 //create clicker counter and display counter from clicks
 var catCount;
 $("#catPic").click("click", function(e) {
 	console.log(currentCat);
-	currentCat.clicks=currentCat.clicks+1;
+	currentCat.clicks=((currentCat.clicks.valueOf())+1);
 	console.log(currentCat.clicks);
 	$("#catCounter").text("Count ="+currentCat.clicks);
 	//hide admin function whenever cat pic is clicked
