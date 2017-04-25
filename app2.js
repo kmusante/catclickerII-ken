@@ -51,6 +51,7 @@ var catImage;
 $("#catList").click("click", function (e) {
 	var id=e.target.id;
 	var catUrl=cats[id].image;
+	var updateName, updateClicks, updateUrl;
 	currentCat=cats[id];
 	//hide details whenever a new cat is clicked
 	$("#details").hide();
@@ -72,7 +73,20 @@ $("#catList").click("click", function (e) {
 		( $('[name=clicks]').val(currentCat.clicks) );
 		( $('[name=name]').val(cats[id].name) );
 		( $('[name=url]').val(catUrl) );
-		//cancel admin when cancel button is clicked
+		});
+	//update fields upon saving
+	$("#saveDetail").click("click", function(){
+		updateClicks=( $('[name=clicks]').val() );
+		updateName=( $('[name=name]').val() );
+		updateUrl=( $('[name=url]').val() );
+		console.log(updateUrl);
+		console.log(updateName);
+		console.log(updateClicks);
+		cats[id].name=updateName;
+		console.log(cats[id].name);
+		$("#details").hide();
+		$('<li id="index">cat.name</li>').replaceWith(updateName);
+		return false;
 		});
 });
 
@@ -90,19 +104,11 @@ $("#catPic").click("click", function(e) {
 //cancel admin when cancel button is clicked
 var cancel;
 $("#cancelDetail").click("click", function(){ 
-		$("#details").hide();
+    $("#details").hide();
+    return false;  
 });
 
-var updateName, updateClicks, updateUrl;
-$("#saveDetail").click("click", function(){ 
-	updateClicks=( $('[name=clicks]').val(currentCat.clicks) );
-	updateName=( $('[name=name]').val(cats[id].name) );
-	updateUrl=( $('[name=url]').val(catUrl) );
-	cats[id].name=updateName;
-	cats[id].clicks=updateClicks;
-	cats[id].url=updateUrl;
 
-});
 
 makeCatList();
 
