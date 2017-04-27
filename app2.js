@@ -94,8 +94,11 @@ var adminButton;
 		currentCat.clicks=updateClicks;
 		currentCat.image=updateUrl;
 		$("#catName").text(currentCat.name);
+		//currentCat.name=($('[name=name]').val());
 		$("#catCounter").text("Count="+currentCat.clicks);
-		$('<li id=id>cats[id].name</li>').replaceWith('<li id=id>updateName</li>');
+		for (var i=0; i<cats.length; i++) {  //understand this line beter
+			$('#'+i).text(cats[i].name);
+		}
 		return false;
 		});
 //create clicker counter and display counter from clicks
